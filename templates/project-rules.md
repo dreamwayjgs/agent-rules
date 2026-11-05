@@ -11,7 +11,7 @@
 - Role files (`ARCHITECT.md`, `BUILDER.md`, `REVIEWER.md`, `ROGER.md`) and this router are generated from templates. Do not edit them in a project; put project rules in `PROJECT.md`. Sync overwrites them.
 - Handoff files overwrite each step except `handoff/BUILD-LOG.md`, which is append-only.
 - `handoff/` is tracked and committed at the deploy gate; git history is its archive. No archive copies (`*.archive.md`, `archive/`, `.bak`).
-- Step evidence (small text) goes in `handoff/evidence/<step>/`. Large or disposable output goes in `.scratch/` (git-ignored, kept 30 days), never under `handoff/`.
+- Step evidence (small text) goes in `handoff/evidence/<step>/`. Large or disposable output goes in `.scratch/` (git-ignored, disposable, may be deleted after 30 days), never under `handoff/`. Tracked files must not depend on `.scratch`.
 - Open items that outlive a Step go to the repo's issue tracker (gh/glab); without one, to `local-issues/NNN-slug.md` at the root (close by deleting the file in a commit).
 - If `manifest.md` says `visibility: public`, `handoff/` is a separate private repo cloned there and git-ignored here; internal issues go to that repo, not the public tracker.
 - Bob runs tests on final post-review-fix state and records commands and results in `handoff/BUILD-LOG.md` and `handoff/REVIEW-REQUEST.md`.
