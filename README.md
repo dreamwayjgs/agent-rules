@@ -6,14 +6,11 @@
 
 **전제:** caveman·three-man-team 설치(각 repo의 기본 설치법)는 새 머신에서 직접 수행. 이 repo는 설치 이후의 설정만 다룬다.
 
-**Foreman 제외:** 이 repo는 설정 export용 — 주간 원장 보고 대상 아님. `foreman register`/`update`/`guide` 돌리지 말 것.
-
 ## 구조
 
 | 경로 | 용도 |
 |---|---|
 | `fragments/00-core.md` | 공통 global router 앞부분 — arguing 규칙, 개발 세션. 자주 바뀜 |
-| `fragments/05-foreman.md` | 선택적 Foreman 전역 규칙. 최초 빌드에서 포함 여부 결정 |
 | `fragments/10-three-man-team.md` | `CLAUDE.md`의 Three Man Team 전체 블록. 안정적, 거의 안 바뀜 |
 | `fragments/90-activation.md` | omp·Crush 전용 블록 — caveman·Ponytail 기본 off, 역할 표로 위임. build가 두 harness 규칙 끝에 붙임 |
 | `build-claude-md.sh` | fragments를 이어붙여 네 harness global rules에 씀(기본: PATH에 있는 harness만, 건너뛴 것은 출력. `--targets`로 지정) + Claude 플러그인 스킬을 `~/.agents/skills/`로 복사 |
@@ -35,7 +32,7 @@
 
 ## 사용법
 
-**global rules 고칠 때:** 생성된 `CLAUDE.md`·`AGENTS.md`를 직접 고치지 않는다. `fragments/*.md`를 고치고 `./build-claude-md.sh` 실행 — `~/.claude/CLAUDE.md`(다른 계정 폴더는 `--targets claude --claude-dir <폴더명>`으로 따로), `~/.config/opencode/AGENTS.md`에 동일하게, `~/.omp/agent/AGENTS.md`, `~/.config/crush/CRUSH.md`에는 같은 내용 + 활성화 블록(세션 시작 hook이 없어서)으로 반영된다. `project-rules.md`·`.claudeignore`와 dev-base 형제 폴더 `three-man-team/templates/`(+ 원본 위치·커밋을 적은 `SOURCE`)는 harness 공통 경로 `~/.config/agent-rules/`에 복사된다. 이 repo가 dev-base 안에 없으면(`../repos.txt`·`../three-man-team/templates` 없음) build는 아무것도 쓰지 않고 멈춘다. `agent-skills.txt`의 스킬(caveman·ponytail·karpathy, 고정 ref)은 `npx skills add`로 `~/.agents/skills/`에 설치된다 — OpenCode V2·omp·Crush가 기본으로 읽는 경로. node·네트워크 필요, Claude 불필요. ref를 올리면 모든 머신에서 build 재실행. 최초 실행은 Foreman 포함 여부를 묻고 선택을 `.claude-settings.local`에 저장한다. 선택을 바꾸려면 이 파일의 값을 수정하거나 파일을 삭제하고 다시 실행한다.
+**global rules 고칠 때:** 생성된 `CLAUDE.md`·`AGENTS.md`를 직접 고치지 않는다. `fragments/*.md`를 고치고 `./build-claude-md.sh` 실행 — `~/.claude/CLAUDE.md`(다른 계정 폴더는 `--targets claude --claude-dir <폴더명>`으로 따로), `~/.config/opencode/AGENTS.md`에 동일하게, `~/.omp/agent/AGENTS.md`, `~/.config/crush/CRUSH.md`에는 같은 내용 + 활성화 블록(세션 시작 hook이 없어서)으로 반영된다. `project-rules.md`·`.claudeignore`와 dev-base 형제 폴더 `three-man-team/templates/`(+ 원본 위치·커밋을 적은 `SOURCE`)는 harness 공통 경로 `~/.config/agent-rules/`에 복사된다. 이 repo가 dev-base 안에 없으면(`../repos.txt`·`../three-man-team/templates` 없음) build는 아무것도 쓰지 않고 멈춘다. `agent-skills.txt`의 스킬(caveman·ponytail·karpathy, 고정 ref)은 `npx skills add`로 `~/.agents/skills/`에 설치된다 — OpenCode V2·omp·Crush가 기본으로 읽는 경로. node·네트워크 필요, Claude 불필요. ref를 올리면 모든 머신에서 build 재실행.
 
 **다른 머신에 세팅할 때:** dev-base(`github.com/dreamwayjgs/dev-base`)를 clone하고 `MIGRATE.md`(처음)·`UPDATE.md`(이후)를 따른다. 항목별 배경은 `claude-settings.md` 참고. 설치 여부(caveman/three-man-team)는 파일 존재로 확인하고, 없으면 임의 설치하지 말고 사용자에게 확인.
 

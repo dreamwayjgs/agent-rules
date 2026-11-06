@@ -23,7 +23,7 @@ try {
   foreach ($case in $cases) {
     $homeDir = Join-Path $root $case.Name
     $arguments = $case.Args
-    & "$repo/build-rules.ps1" @arguments -TargetHome $homeDir -IncludeForeman false | Out-Null
+    & "$repo/build-rules.ps1" @arguments -TargetHome $homeDir | Out-Null
     foreach ($rel in $paths) {
       $file = Join-Path $homeDir $rel
       Assert ((Test-Path $file) -eq ($rel -in $case.Expected)) "$($case.Name): unexpected output $rel"
@@ -44,7 +44,7 @@ try {
   $sentinel = Join-Path $root 'both/.config/crush/CRUSH.md'
   New-Item -ItemType Directory (Split-Path $sentinel) -Force | Out-Null
   Set-Content $sentinel 'keep'
-  & "$repo/build-rules.ps1" -Targets omp,opencode -TargetHome "$root/both" -IncludeForeman false | Out-Null
+  & "$repo/build-rules.ps1" -Targets omp,opencode -TargetHome "$root/both" | Out-Null
   Assert ((Get-Content $sentinel -Raw).Trim() -eq 'keep') 'non-selected file was modified'
   Write-Output 'PASS: non-selected file preserved'
 
@@ -56,7 +56,7 @@ try {
   foreach ($arguments in $invalid) {
     $homeDir = Join-Path $root 'invalid'
     $failed = $false
-    try { & "$repo/build-rules.ps1" @arguments -TargetHome $homeDir -IncludeForeman false | Out-Null }
+    try { & "$repo/build-rules.ps1" @arguments -TargetHome $homeDir | Out-Null }
     catch { $failed = $true }
     Assert $failed "invalid arguments accepted: $($arguments | ConvertTo-Json -Compress)"
     Assert (-not (Test-Path $homeDir)) 'invalid arguments wrote files'

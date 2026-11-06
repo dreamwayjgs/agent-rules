@@ -8,7 +8,6 @@ mkdir -p "$ROOT/dev-base/settings" "$ROOT/dev-base/three-man-team/templates"
 touch "$ROOT/dev-base/repos.txt"
 cp "$REPO/build-claude-md.sh" "$REPO/agent-skills.txt" "$ROOT/dev-base/settings/"
 cp -R "$REPO/fragments" "$REPO/templates" "$ROOT/dev-base/settings/"
-printf 'INCLUDE_FOREMAN=false\n' > "$ROOT/dev-base/settings/.claude-settings.local"
 git -C "$ROOT/dev-base/three-man-team" init -q
 git -C "$ROOT/dev-base/three-man-team" -c user.name=Test -c user.email=test@example.invalid commit -q --allow-empty -m fixture
 npx() { return 0; }

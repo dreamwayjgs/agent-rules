@@ -1,8 +1,6 @@
 #Requires -Version 7
 [CmdletBinding()]
 param(
-  [ValidateSet('true', 'false')]
-  [string]$IncludeForeman,
   # Omitted: every harness whose CLI is on PATH (skipped ones are printed).
   [ValidateNotNullOrEmpty()]
   [ValidateSet('claude', 'crush', 'omp', 'opencode')]
@@ -30,7 +28,6 @@ if ($PSBoundParameters.ContainsKey('ClaudeDir') -and $Targets -notcontains 'clau
 }
 
 $repo = $PSScriptRoot
-$config = Join-Path $repo '.claude-settings.local'
 
 # Skills are installed with the `skills` CLI via npx; without it the build would
 # leave ~/.agents/skills stale, so fail before writing anything (including the
@@ -47,31 +44,10 @@ if (-not (Test-Path -LiteralPath (Join-Path $devBase 'repos.txt')) -or -not (Tes
   throw 'this repo must sit in dev-base next to three-man-team (run dev-base/bootstrap.sh); nothing written'
 }
 
-if (Test-Path -LiteralPath $config) {
-  $setting = (Get-Content -LiteralPath $config -Raw -Encoding utf8).Trim()
-  if ($setting -notmatch '^INCLUDE_FOREMAN=(true|false)$') {
-    throw "invalid ${config}: expected INCLUDE_FOREMAN=true|false"
-  }
-  $IncludeForeman = $Matches[1]
-} elseif (-not $IncludeForeman) {
-  $IncludeForeman = if ((Read-Host 'Include Foreman integration? [y/N]') -match '^(y|yes)$') { 'true' } else { 'false' }
-}
-
-if ($IncludeForeman -eq 'true' -and -not (Get-Command foreman -ErrorAction SilentlyContinue)) {
-  throw 'Foreman is not installed; install it or choose IncludeForeman false'
-}
-
-if (-not (Test-Path -LiteralPath $config)) {
-  [System.IO.File]::WriteAllText($config, "INCLUDE_FOREMAN=$IncludeForeman`n", [System.Text.UTF8Encoding]::new($false))
-}
-
 $fragments = @(
   (Join-Path $repo 'fragments/00-core.md')
+  (Join-Path $repo 'fragments/10-three-man-team.md')
 )
-if ($IncludeForeman -eq 'true') {
-  $fragments += Join-Path $repo 'fragments/05-foreman.md'
-}
-$fragments += Join-Path $repo 'fragments/10-three-man-team.md'
 
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 $content = ($fragments | ForEach-Object { [System.IO.File]::ReadAllText($_, $utf8NoBom).TrimEnd("`r", "`n") }) -join "`n`n"

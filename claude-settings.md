@@ -16,7 +16,6 @@
 | `statusline.sh` | 상태줄 스크립트 (Linux/macOS/WSL) — `~/.claude/statusline.sh`로 복사 |
 | `statusline.ps1` | 상태줄 스크립트 (Windows PowerShell 버전, 동일 기능) |
 | `fragments/00-core.md`, `fragments/10-three-man-team.md` | 동일 내용의 global `CLAUDE.md`·`AGENTS.md` source of truth |
-| `fragments/05-foreman.md` | 선택적 Foreman 전역 규칙 |
 | `fragments/90-activation.md` | omp·Crush 전용 블록 (caveman·Ponytail 기본 off, 역할 표로 위임) |
 | `build-claude-md.sh` | fragments를 이어붙여 `~/.claude/CLAUDE.md`(`--claude-dir`로 변경), `~/.config/opencode/AGENTS.md`, `~/.omp/agent/AGENTS.md`, `~/.config/crush/CRUSH.md` 생성 + 플러그인 스킬을 `~/.agents/skills/`로 복사 |
 | `build-rules.ps1` | `pwsh` 7용 동일 생성기 (Windows PowerShell 5 미지원). UTF-8 without BOM 출력 |
@@ -32,7 +31,6 @@
 - three-man-team: dev-base(`github.com/dreamwayjgs/dev-base`)의 `bootstrap.sh`가 이 repo 옆에 개인 포크를 clone한다 (원본은 `upstream` remote). build가 템플릿을 `~/.config/agent-rules/three-man-team/`에 복사하므로 확인은 그 경로로 한다
 - karpathy-skills (옵셔널): `settings.json`의 `enabledPlugins`에 `andrej-karpathy-skills@karpathy-skills` + `extraKnownMarketplaces`에 `karpathy-skills`. 역할별 Karpathy 적용은 포크 템플릿 역할 파일의 karpathy 블록이 담당한다. 플러그인은 Claude Code 전용이고, 다른 하네스용 스킬은 build가 `agent-skills.txt`로 설치한다
 - ponytail (옵셔널): Claude Code·OpenCode·Crush의 설치 경로가 다르다. Claude Code는 플러그인 마켓플레이스(github `DietrichGebert/ponytail`), OpenCode는 V1이면 npm 플러그인 `@dietrichgebert/ponytail`, V2면 `opencode-plugins/ponytail-v2` 로컬 패치, omp·Crush·OpenCode V2가 읽는 `~/.agents/skills`는 build가 `agent-skills.txt`에서 설치한다 (§5 참조). Claude 플러그인은 Claude Code에만 적용된다
-- Foreman (옵셔널): 최초 `build-claude-md.sh` 실행에서 전역 연동 여부를 묻는다. 포함하려면 `foreman` 명령이 먼저 설치되어 있어야 한다
 
 caveman·three-man-team 중 하나라도 없으면 → 사용자에게 설치 여부 확인 요청. 임의 설치 금지. (karpathy는 옵셔널 — 위 노트 참조.)
 
@@ -105,8 +103,6 @@ pwsh -File ./build-rules.ps1  # Windows: same output, UTF-8 without BOM
 선택 배포의 격리 회귀 테스트: `pwsh -File tests/build-targets.ps1`, `bash tests/build-targets.sh`. 파일 생성·내용·비선택 파일 보존·잘못된 인자 거부를 확인하며 harness CLI 연동은 검증하지 않는다. Bash 테스트의 스킬 설치는 stub 처리한다.
 
 build는 마지막에 `agent-skills.txt`(repo·ref·스킬 이름)의 스킬을 `npx skills add`로 `~/.agents/skills`에 설치한다. node와 네트워크가 필요하고, Claude Code 설치 여부와 무관하다. `npx`가 없으면 규칙 파일을 쓰기 전에 실패한다. `build-rules.ps1 -TargetHome <경로>`는 규칙·템플릿만 그 경로에 쓰고 스킬 설치는 건너뛴다(skills CLI가 실제 HOME에만 설치하므로). ref는 full commit sha 또는 태그만 된다(CLI가 `git clone --branch <ref>`를 쓴다). 설치 출처·ref·해시는 `~/.agents/.skill-lock.json`에 남는다. ref와 Claude 플러그인 버전은 같게 유지한다. `claude plugin update`는 항상 마켓플레이스 최신으로 가므로, 올릴 땐 이 repo 세션에서 매니페스트 ref를 먼저 그 버전으로 바꿔 커밋하고, 각 머신에서 `claude plugin update` + build를 한다. 플러그인만 앞서 있으면 매니페스트를 따라 올리는 커밋을 같이 하고, 매니페스트만 올리고 플러그인을 안 올리는 상태는 두지 않는다.
-
-최초 실행에서 Foreman 포함 여부를 선택한다. 선택은 Git에서 제외되는 `.claude-settings.local`에 저장되며 이후 빌드에서도 재사용된다. 선택을 바꾸려면 이 파일의 값을 수정하거나 삭제 후 다시 실행한다. 비대화형 최초 실행은 `INCLUDE_FOREMAN=true|false ./build-claude-md.sh`처럼 명시한다.
 
 사용법:
 
