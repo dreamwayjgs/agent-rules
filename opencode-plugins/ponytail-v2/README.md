@@ -40,7 +40,7 @@ mkdir -p ~/.config/opencode/plugins/ponytail && cd ~/.config/opencode/plugins/po
 cat > package.json <<'EOF'
 { "name": "ponytail-opencode-plugin", "version": "0.1.0", "type": "module", "main": "index.js", "private": true }
 EOF
-npm install --no-save @dietrichgebert/ponytail@5.3.2   # = agent-skills.txt ponytail tag without "v"
+npm install --no-save @dietrichgebert/ponytail@5.3.3   # = agent-skills.txt ponytail tag without "v"
 cp <repo>/opencode-plugins/ponytail-v2/index.js ./index.js
 ```
 
