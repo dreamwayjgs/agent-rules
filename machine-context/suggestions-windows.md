@@ -5,9 +5,17 @@ Windows 머신의 `~/.config/machine-context/local.md`에 넣을 만한 항목�
 ## local.md 예시
 
 ```markdown
-## Shell
+## 셸
 
-- Default shell: pwsh (PowerShell 7). Windows PowerShell 5 is not used.
+- 기본 셸은 pwsh (PowerShell 7)다. Windows PowerShell 5는 쓰지 않는다.
+
+## 패키지 관리
+
+- 패키지·의존성 관리는 scoop을 우선한다 (uv 자체는 scoop으로 설치하고, Python은 uv가 관리한다). scoop에 없는 패키지는 다른 소스를 쓰기 전에 소유자에게 묻는다.
+
+## OpenCode
+
+- OpenCode TUI 탭은 off다 (`~/.config/opencode/cli.json`, build가 건드리지 않으므로 수동 유지).
 ```
 
 ## 함정
@@ -19,7 +27,7 @@ Windows 머신의 `~/.config/machine-context/local.md`에 넣을 만한 항목�
   `$k='HKCU:\Environment'` (시스템은 `'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment'`, 관리자)
   `$v=(Get-Item $k).GetValue('Path',$null,'DoNotExpandEnvironmentNames')` → 수정 → `Set-ItemProperty $k Path $v -Type ExpandString`
 - **MSI로 설치된 프로그램:** 소유자가 먼저 설정 > 앱(제어판)에서 제거하고, 에이전트는 그다음 남은 흔적만 확인한다. 에이전트가 `msiexec`·레지스트리로 직접 지우지 않는다.
-- **관리자 권한:** 에이전트 셸은 보통 관리자 권한이 아니다. 시스템 전체 설치본(MSI·chocolatey) 제거나 HKLM·시스템 PATH 수정은 명령을 소유자에게 넘겨 관리자 pwsh에서 실행하게 한다.
+- **관리자 권한:** 에이전트 셸은 보통 관리자 권한이 아니다. 시스템 전체 설치본(MSI 등 scoop 범위 밖) 제거나 HKLM·시스템 PATH 수정은 명령을 소유자에게 넘겨 관리자 pwsh에서 실행하게 한다.
 - **Microsoft Store 별칭:** `%LOCALAPPDATA%\Microsoft\WindowsApps`의 `python.exe`·`python3.exe`는 0바이트 스토어 스텁이다. 파일을 지워도 업데이트 때 다시 생길 수 있으니 설정 > 앱 > 고급 앱 설정 > 앱 실행 별칭에서 끈다.
 - **Claude Code PowerShell 도구 오탐:** 한 명령 안에 `Remove-Item`과 경로처럼 보이는 문자열(예: 정규식 `'foo-(a|b)\.js'`)이 함께 있으면 보호 경로 삭제로 오인해 명령 전체를 막는다. 삭제 명령은 따로 실행한다.
 - **Claude 프로젝트 slug:** 절대경로의 영숫자가 아닌 문자가 모두 `-`로 바뀐다(`:`·`\`·`_` 포함). 직접 계산하지 말고 `~/.claude*/projects/` 목록에서 찾는다.

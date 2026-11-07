@@ -7,9 +7,9 @@ AI의 Python 작업에 uv를 사용하도록 안내하는 `~/.config/machine-con
 ```markdown
 ## Python
 
-- Use uv for everything Python: `uv run`, `uv venv`, `uv pip`, `uv python install`, `uvx` for tools.
-- Do not call bare `python`/`python3`/`py`/`pip`.
-- Do not modify OS-managed Python installations or install packages into their environments. (Linux)
+- Python 작업은 전부 uv로 한다: `uv run`, `uv venv`, `uv pip`, `uv python install`, 도구는 `uvx`로 실행한다.
+- bare `python`/`python3`/`py`/`pip`를 직접 부르지 않는다.
+- OS가 관리하는 Python 설치본을 바꾸거나 그 환경에 패키지를 설치하지 않는다. (Linux)
 ```
 
 "uv로 설치된 걸 써라" 한 줄로는 부족하다. 에이전트는 습관대로 bare `python`·`pip`을 부르므로 행동 단위로 적는다.
