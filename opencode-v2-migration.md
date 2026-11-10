@@ -27,7 +27,7 @@ Bun → Node 런타임 전환으로 메모리 개선 (공식 명시 사유). 202
 | 항목 | V1 | V2 |
 |---|---|---|
 | config | `opencode.json.example` (`plugin`) | `opencode.v2.json.example` (`plugins`, 로컬 플러그인 폴더) |
-| caveman | `plugins/caveman/plugin.js` (V1) | upstream v4.0.1 `src/plugins/opencode/` (`server.js`가 V2 진입점). 임시 패치는 2026-10-14 철수 |
+| caveman | `plugins/caveman/plugin.js` (V1) | upstream v4.1.0 `src/plugins/opencode/` (`server.js`가 V2 진입점). 임시 패치는 2026-10-14 철수 |
 | ponytail | npm `@dietrichgebert/ponytail` (V1 API, V2에서 크래시) | `opencode-plugins/ponytail-v2/` 임시 패치 |
 | `commands/*.md` | `description`만 사용 | 변경 없음 (`subtask` 미사용) |
 | `AGENTS.md`·스킬 | | 변경 없음 |
@@ -50,7 +50,7 @@ Bun → Node 런타임 전환으로 메모리 개선 (공식 명시 사유). 202
    `~/.config/opencode/AGENTS.md`에 상시 caveman ruleset 블록을 넣고 skills·agents까지 깔아
    기본 off 정책과 `~/.agents/skills` 단일 경로를 깬다. ref는 `agent-skills.txt`의 caveman ref와 같게.
    ```bash
-   git clone -q --depth 1 --branch v4.0.1 https://github.com/JuliusBrussee/caveman /tmp/caveman-src
+   git clone -q --depth 1 --branch v4.1.0 https://github.com/JuliusBrussee/caveman /tmp/caveman-src
    S=/tmp/caveman-src; P=~/.config/opencode/plugins/caveman; mkdir -p $P ~/.config/opencode/commands
    cp $S/src/plugins/opencode/{plugin.js,server.js,package.json} $P/
    cp $S/src/hooks/caveman-config.js $P/caveman-config.cjs
@@ -59,7 +59,7 @@ Bun → Node 런타임 전환으로 메모리 개선 (공식 명시 사유). 202
    cp $S/src/plugins/opencode/commands/*.md ~/.config/opencode/commands/
    ```
    ```powershell
-   git clone -q --depth 1 --branch v4.0.1 https://github.com/JuliusBrussee/caveman $env:TEMP\caveman-src
+   git clone -q --depth 1 --branch v4.1.0 https://github.com/JuliusBrussee/caveman $env:TEMP\caveman-src
    $S = "$env:TEMP\caveman-src"; $P = "$HOME\.config\opencode\plugins\caveman"
    New-Item -ItemType Directory -Force $P, "$HOME\.config\opencode\commands" | Out-Null
    Copy-Item "$S\src\plugins\opencode\plugin.js", "$S\src\plugins\opencode\server.js", "$S\src\plugins\opencode\package.json" $P

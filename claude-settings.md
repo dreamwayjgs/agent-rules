@@ -45,7 +45,7 @@ caveman·three-man-team 중 하나라도 없으면 → 사용자에게 설치 �
 - 훅(`SessionStart`·`SubagentStart`·`UserPromptSubmit`)은 플러그인 manifest가 등록한다. `settings.json`에 caveman 훅을 따로 넣지 않는다 — 2026-10-13까지 같은 훅이 `~/.claude/hooks/` 사본으로 중복 등록돼 있었고, v3 업그레이드 때 제거했다. 플러그인 훅은 `node`를 PATH에서 찾으니 nvm 환경에서는 nvm이 로드된 셸에서 Claude를 띄운다 (없으면 조용히 건너뛴다).
 - `~/.claude/hooks/caveman-*`는 statusline 배지(`statusline.sh` → `hooks/caveman-statusline.sh`)만 쓴다. 플러그인 업데이트 뒤 `~/.claude/plugins/cache/caveman/caveman/<version>/src/hooks/`의 `caveman-activate.js`·`caveman-config.js`·`caveman-mode-tracker.js`·`caveman-stats.js`·`caveman-statusline.sh`·`caveman-statusline.ps1`를 다시 복사한다.
 - `<HOME>` → 홈 디렉토리 절대경로로 치환 (statusLine)
-- 버전: 플러그인 4.0.1 (2026-10-14). `agent-skills.txt`의 caveman ref와 같이 올린다.
+- 버전: 플러그인 4.1.0 (2026-11-10). `agent-skills.txt`의 caveman ref와 같이 올린다.
 
 사용법:
 
