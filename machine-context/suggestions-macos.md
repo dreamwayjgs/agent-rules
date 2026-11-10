@@ -5,15 +5,18 @@ macOS(Apple Silicon) 머신의 `~/.config/machine-context/local.md`에 넣을 �
 ## local.md 예시
 
 ```markdown
-## Shell
+## 셸
 
-- macOS (Apple Silicon, arm64). Default shell: zsh. `/bin/bash` is 3.2 — do not use bash 4+ features.
-- Userland is BSD, not GNU: `sed -i ''`, `date -v-1d` (no `date -d`), `stat -f %z` (no `stat -c`), no `grep -P`.
-- Tools are managed by Homebrew (`/opt/homebrew`). Update with `brew upgrade`, not each tool's self-update.
+- macOS (Apple Silicon, arm64)다. 기본 셸은 zsh다. `/bin/bash`는 3.2라 bash 4 이상 기능을 쓰지 않는다.
+- 기본 도구는 GNU가 아니라 BSD다: `sed -i ''`, `date -v-1d` (`date -d` 없음), `stat -f %z` (`stat -c` 없음), `grep -P` 없음.
+
+## 패키지 관리
+
+- 도구는 Homebrew(`/opt/homebrew`)로 관리한다. 각 도구의 자체 업데이트가 아니라 `brew upgrade`로 올린다.
 
 ## Docker
 
-- Docker runs inside a Linux VM (colima). No GPU inside containers — run GPU work natively (MPS, MLX). Images must be arm64.
+- Docker는 Linux VM(colima) 안에서 돈다. 컨테이너 안에는 GPU가 없으므로 GPU 작업은 네이티브(MPS, MLX)로 돌린다. 이미지는 arm64여야 한다.
 ```
 
 ## 함정
