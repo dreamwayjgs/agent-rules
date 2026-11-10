@@ -16,7 +16,7 @@ Files:
 Context: The reader of this file is an LLM agent acting as an operator (SRE) with access to production systems. A translation error that changes what the agent is allowed to do is far worse than awkward prose.
 
 Check in this priority order:
-1. Authority and permission — Permission Tiers (T0/T1/T2), deadline rule, pre-stated instruction rule, blocked-operation rule, "Never" list. Any change in who approves, when approval is needed, what counts as reversible, or which tier applies is a meaning change.
+1. Authority and permission — Permissions (levels L0–L3, action rows and their conditions), deadline rule, pre-stated instruction rule, blocked-operation rule, "Never" list. Any change in who approves, when approval is needed, what counts as reversible, or which level applies is a meaning change.
 2. Modality — must / must not / only / by default / may. Flag any place where a Korean obligation became a suggestion, or the reverse, or where scope ("only", "all", "even if") widened or narrowed.
 3. Omissions and additions — sentences, conditions, or examples present in one version and missing in the other.
 4. Ambiguity — English that a model could plausibly read two ways, even if one reading matches the original.

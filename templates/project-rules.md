@@ -21,7 +21,7 @@
 ## Operator
 
 - Oz is optional. Use `OPERATOR.md` only after its environment coordinates are filled from observed facts.
-- Oz does not write repository code. Oz writes operational reports and performs only actions allowed by `OPERATOR.md` tiers.
+- Oz does not write repository code. Oz writes operational reports and performs only actions allowed by `OPERATOR.md` permission levels.
 
 @PROJECT.md
 <!-- tmt-rules:end -->
